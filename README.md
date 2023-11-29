@@ -1,18 +1,33 @@
+# rkos-build - Creating a clean build environment for rkos base on Arch Linux
 
-# Host Environment Construction Guide
+This rkos-build is an integral part of the rkos project, dedicated to creating a clean build environment for developing new Linux distributions. It is specifically designed to provide a build environment for the rkos project, facilitating the construction of a Linux distribution based on Linux From Scratch (LFS) methodologies. The project's primary goal is to offer a standardized and replicable way to assemble the components of a Linux system, ensuring a clear and manageable development process. Importantly, rkos-build is developed based on Arch Linux, leveraging its robust and flexible framework to provide a stable foundation for building the rkos Linux distribution.
 
-* Install build tools
+## How to run rkos-build
+
+1. Install build tools
 
 ```bash
 sudo pacman -S archiso
 ```
 
-* Modify the configuration file
+"Archiso is a highly-customizable tool for building Arch Linux live CD/USB ISO images. The official images are built with Archiso. It can be used as the basis for rescue systems, linux installers or other systems. This wiki article explains how to install Archiso, and how to configure it to control aspects of the resulting ISO image such as included packages and files. Technical requirements and build steps can be found in the official project documentation. Archiso is implemented with a number of bash scripts. The core component of Archiso is the mkarchiso command. Its options are documented in mkarchiso -h and not covered here." - [1]
 
-  * If you plan to use the KVM virtual machine as the host, no modification is required.
-  * If you plan to use a virtual machine such as VirtualBox as a host, modify the value of the "harddrives" key in user_configureation.json to /dev/sda, /dev/sdb, or /dev/sdc.
+2. Modify the configuration file
 
-* Create a configuration file directory for the build process
+  * If you plan to use the **KVM** as the host, no modification is required.
+  * If you plan to use the **VirtualBox** as a host, modify the value of the `harddrives` key in `/root/user_configureation.json` to `/dev/sda`, `/dev/sdb`, or `/dev/sdc`:
+
+  ```json
+  {
+    "harddrives": [
+      "/dev/sda",
+      "/dev/sdb",
+      "/dev/sdc"
+    ],
+  }
+  ```
+
+3. Create a configuration file directory for the build process
 
 ```bash
 mkdir -p ./archiso
@@ -20,7 +35,7 @@ cd ./archiso
 cp -r /usr/share/archiso/configs/releng/* ./
 ```
 
-* Overwrite the configuration file in the configuration file directory.
+4. Overwrite the configuration file in the configuration file directory.
 
 ```bash
 cd ./archiso
@@ -29,7 +44,7 @@ cp path/to/rkos-build/packages.x86_64 ./
 
 ```
 
-* Build host image
+5. Build host image
 
 ```bash
 cd ./archiso
@@ -45,15 +60,13 @@ mkarchiso -v -w work/ -o out/ ./
   * After the host environment is installed, you need to manually mount the swap partition.
   * Host username root password root
 
-* Automation script (Comming soon)
+6. Automation script (Comming soon)
 
 ## References
 
-[https://wiki.archlinux.org/title/archiso](https://wiki.archlinux.org/title/archiso)
-
-[https://github.com/archlinux/archinstall](https://github.com/archlinux/archinstall)
-
-[https://github.com/archlinux/archinstall/wiki/Building-and-Testing](https://github.com/archlinux/archinstall/wiki/Building-and-Testing)
+1. [https://wiki.archlinux.org/title/archiso](https://wiki.archlinux.org/title/archiso)
+2. [https://github.com/archlinux/archinstall](https://github.com/archlinux/archinstall)
+3. [https://github.com/archlinux/archinstall/wiki/Building-and-Testing](https://github.com/archlinux/archinstall/wiki/Building-and-Testing)
 
 
 ## Contribution
